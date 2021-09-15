@@ -26,23 +26,31 @@
       <img class="logo" src="FishMarkLogo.png"/>
     </div>
 
-    <div class="form-popup" id="myForm">
-      <form action="/action_page.php" class="form-container">
-        <h1>Login</h1>
     
-        <label for="email"><b>Email</b></label>
-        <input type="text" placeholder="Enter Email" name="email" required>
-    
-        <label for="psw"><b>Password</b></label>
-        <input type="password" placeholder="Enter Password" name="psw" required>
-    
-        <button type="submit" class="btn">Login</button>
-        <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
+    <div id="mapid"></div>
+
+    <div class="modal">
+      <form>
+        <div>
+          <h1 class="form__label">New Entry</h1>
+          <label>Rating</label>
+          <select>
+            <option value="1">⭐️</option>
+            <option value="2">⭐️⭐️</option>
+            <option value="3">⭐️⭐️⭐️</option>
+            <option value="4">⭐️⭐️⭐️⭐️</option>
+            <option value="5">⭐️⭐️⭐️⭐️⭐️</option>
+          </select>
+            <label>Fish Count</label>
+            <input placeholder="0"/>
+            
+            <button>Add</button>
+        </div>
       </form>
     </div>
 
+    <div class="overlay hidden"></div>
     
-    <div id="mapid"></div>
     <script src="script.js"></script>
   </body>
 </html>

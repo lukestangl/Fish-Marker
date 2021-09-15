@@ -9,6 +9,9 @@ const DEFAULT_MAP_LAT =  38.889248;
 const DEFAULT_MAP_LONG = -81.00000;
 const DEFAULT_MAP_LAT = 24.7260;
 
+const formDisplay = document.querySelector('.modal')
+const overlayDisplay = document.querySelector('.overlay')
+
 
 let fishingSpots = new Array();
 let map;
@@ -60,15 +63,6 @@ function weather(lat, lng) {
 }
 
 
-  function openForm() {
-    document.getElementById("myForm").style.display = "block";
-  }
-  
-  function closeForm() {
-    document.getElementById("myForm").style.display = "none";
-  }
-
-
 /*function weather(lat, lng) {
     var url1 = 'https://cors-anywhere.herokuapp.com/'
     var url = `https://www.metaweather.com/api/location/search/?lattlong=${lat},${lng}`;
@@ -104,17 +98,18 @@ function loadMap (Pos) {
     map.on('click', addEntry.bind(this))
 
 }
+
 function addEntry(pos) {
 
     let title = "Fishing Entry";
     let rating = "5";
     let numFish = 5;
-
+    formDisplay.classList.remove('hidden');
+    overlayDisplay.classList.remove('hidden');
     weather(pos.latlng.lat,pos.latlng.lng).then(weatherInfo => {
         const tempSpot = new FishSpot(rating, numFish, pos.latlng.lat, pos.latlng.lng, weatherInfo )
         
         fishingSpots.push(tempSpot);
-        openForm();
         addMarker(pos.latlng.lat, pos.latlng.lng, title);
     })
     
