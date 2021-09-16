@@ -29,11 +29,13 @@
     
     <div id="mapid"></div>
 
-    <div class="modal">
+    <div class="modal hidden">
       <form>
         <div>
-          <h1 class="form__label">New Entry</h1>
-          <label>Rating</label>
+          <h2>New Entry</h2>
+        </div>
+        <div>
+          <label class="form__label">Rating</label>
           <select>
             <option value="1">⭐️</option>
             <option value="2">⭐️⭐️</option>
@@ -41,10 +43,20 @@
             <option value="4">⭐️⭐️⭐️⭐️</option>
             <option value="5">⭐️⭐️⭐️⭐️⭐️</option>
           </select>
-            <label>Fish Count</label>
+        </div>
+        <div>
+          <label class="form__label">Fish Count</label>
             <input placeholder="0"/>
-            
-            <button>Add</button>
+        </div>
+        <div>
+          <label class="form__label">Comments</label>
+        </div>
+        <div>
+          <textarea cols="40" maxlength = "100" rows="3"></textarea>
+        </div>
+        <div>
+          <button class="form__button">Cancel</button>
+          <button class="form__button">Add</button>
         </div>
       </form>
     </div>
