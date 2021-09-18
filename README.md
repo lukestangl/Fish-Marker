@@ -9,6 +9,7 @@
 - Be able to delete marks
 - Us DB to hold user data
 - Create a login for website
+- Make weather emoji dependent on weather in area
 
 
 https://github.com/lukestangl/Fish-Marker
