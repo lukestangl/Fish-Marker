@@ -3,12 +3,12 @@
 
 ## TODO
 
-Create a loading spinner for the map
-Have the sidebar be able to toggle open/closed
-Move map when clicking on specific mark
-Be able to delete marks
-Us DB to hold user data
-Create a login for website
+- Create a loading spinner for the map
+- Have the sidebar be able to toggle open/closed
+- Move map when clicking on specific mark
+- Be able to delete marks
+- Us DB to hold user data
+- Create a login for website
 
 
 https://github.com/lukestangl/Fish-Marker
