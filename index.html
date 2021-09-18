@@ -21,45 +21,70 @@
 
   </head>
   <body>
-    
     <div class="sidebar">
       <img class="logo" src="FishMarkLogo.png"/>
-    </div>
+      <ul class="list__marks">
+        <li class="side__entries">
+          <h3>April 14</h2>
+          <div>
+            <span>⭐️⭐️⭐️⭐️⭐️</span
+          </div>
+          <div class="mid__row">
+            <span>
+              <span class="icon_row">🐟</span>
+              <span class="val_row text_row">3</span>
+            </span>
+            <span class="side__emoji">
+              <span class="icon_row">☀️</span>
+              <span class="val_row">78</span>
+              <span class="text_row">°F</span>            
+            </span>
+            <span class="side__emoji">
+              <span class="icon_row">📍</span> 
+              <span class="val_row">2</span> 
+              <span class="text_row">miles away</span>
+            </span>
+          </div>
+          <div>
+            <span>This place was nice!</span>
+          </div>
+        </li>
+      </div>
+    </ul>
 
-    
     <div id="mapid"></div>
 
     <div class="modal hidden">
-      <form>
+      <form class="form">
         <div>
           <h2>New Entry</h2>
         </div>
-        <div>
-          <label class="form__label">Rating</label>
-          <select>
-            <option value="1">⭐️</option>
-            <option value="2">⭐️⭐️</option>
-            <option value="3">⭐️⭐️⭐️</option>
-            <option value="4">⭐️⭐️⭐️⭐️</option>
-            <option value="5">⭐️⭐️⭐️⭐️⭐️</option>
-          </select>
-        </div>
-        <div>
-          <label class="form__label">Fish Count</label>
-            <input placeholder="0"/>
-        </div>
-        <div>
-          <label class="form__label">Comments</label>
-        </div>
-        <div>
-          <textarea cols="40" maxlength = "100" rows="3"></textarea>
-        </div>
-        <div>
-          <button class="form__button">Cancel</button>
-          <button class="form__button">Add</button>
-        </div>
-      </form>
-    </div>
+        <div class="form__input">
+            <label class="form__label">Rating</label>
+            <select>
+              <option value="⭐️">1</option>
+              <option value="⭐️⭐️">2</option>
+              <option value="⭐️⭐️⭐️">3</option>
+              <option value="⭐️⭐️⭐️⭐️">4</option>
+              <option value="⭐️⭐️⭐️⭐️⭐️">5</option>
+            </select>
+            <label class="form__label">Fish Count</label>
+            <input class="form__fish" maxlength="3" placeholder="0"/>
+            <label class="form__label">Lat</label>
+            <input class="form__lat" maxlength="5"/>
+            <label class="form__label">Long</label>
+            <input class="form__long" maxlength="5"/>
+            <label class="form__label">Comments</label>
+          </div>
+          <div>
+            <textarea class="form__comments" cols="40" maxlength="200" rows="3"></textarea>
+          </div>
+          <div class='form__buttons'>
+            <button type="reset" class="form__cancel__button">Cancel</button>
+            <button type="submit" class="form__add__button">Add</button>
+          </div>
+        </form>
+      </div>
 
     <div class="overlay hidden"></div>
     

@@ -9,8 +9,28 @@ const DEFAULT_MAP_LAT =  38.889248;
 const DEFAULT_MAP_LONG = -81.00000;
 const DEFAULT_MAP_LAT = 24.7260;
 
-const formDisplay = document.querySelector('.modal')
-const overlayDisplay = document.querySelector('.overlay')
+const formDisplay = document.querySelector('.modal');
+const overlayDisplay = document.querySelector('.overlay');
+const form = document.querySelector('.form');
+const formLat = document.querySelector('.form__lat');
+const formLong = document.querySelector('.form__long');
+const formRating = document.querySelector('.form__rating'); 
+const formFish = document.querySelector('.form__fish');
+
+function closeModule() {
+  formDisplay.classList.add('hidden');
+  overlayDisplay.classList.add('hidden');
+}
+function openModule() {
+  formDisplay.classList.remove('hidden');
+  overlayDisplay.classList.remove('hidden');
+}
+
+
+form.addEventListener('submit', addEntry.bind(this));
+form.addEventListener('reset', closeModule);
+
+
 
 
 let fishingSpots = new Array();
@@ -77,6 +97,17 @@ function weather(lat, lng) {
 
 weather(10,10);
 */
+function renderSpinner() {
+  const markup = `
+    <div class="spinner">
+      <svg>
+        <use href="Icon.png"></use>
+      </svg>
+    </div>
+  `;
+  this._clear();
+  this._parentElement.insertAdjacentHTML('afterbegin', markup);
+}
 
 function loadMap (Pos) {
     if (Pos) {
@@ -95,24 +126,30 @@ function loadMap (Pos) {
         '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
     }).addTo(map); 
 
-    map.on('click', addEntry.bind(this))
+    map.on('click', saveLatLong.bind(this))
 
 }
+function saveLatLong(pos) {
+  formLat.value = pos.latlng.lat.toFixed(3);
+  formLong.value = pos.latlng.lng.toFixed(3);
+  openModule();
+}
 
-function addEntry(pos) {
-
+function addEntry(e) {
+    e.preventDefault();
     let title = "Fishing Entry";
-    let rating = "5";
-    let numFish = 5;
-    formDisplay.classList.remove('hidden');
-    overlayDisplay.classList.remove('hidden');
-    weather(pos.latlng.lat,pos.latlng.lng).then(weatherInfo => {
-        const tempSpot = new FishSpot(rating, numFish, pos.latlng.lat, pos.latlng.lng, weatherInfo )
+
+    weather(formLat.value,formLong.value ).then(weatherInfo => {
+        const tempSpot = new FishSpot(formRating.value, formFish.value, formLat.value, formLong.value, weatherInfo);
         
         fishingSpots.push(tempSpot);
-        addMarker(pos.latlng.lat, pos.latlng.lng, title);
+        addMarker(formLat.value, formLong.value, title);
+        form.reset();
     })
-    
+    closeModule();
+
+
+    console.log(fishingSpots);
 }
 function addMarker(lat, lng, title) {
 
