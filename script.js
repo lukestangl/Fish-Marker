@@ -8,6 +8,9 @@ const DEFAULT_MAP_LAT =  38.889248;
 */
 const DEFAULT_MAP_LONG = -81.00000;
 const DEFAULT_MAP_LAT = 24.7260;
+const EARTH_R = 3958.756;
+const PI_DIV_180 = 0.017453292519943295;  
+const DATE_OPTIONS = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
 
 const formDisplay = document.querySelector('.modal');
 const overlayDisplay = document.querySelector('.overlay');
@@ -16,6 +19,11 @@ const formLat = document.querySelector('.form__lat');
 const formLong = document.querySelector('.form__long');
 const formRating = document.querySelector('.form__rating'); 
 const formFish = document.querySelector('.form__fish');
+const markList = document.querySelector('.list__marks');
+const formComment = document.querySelector('.form__comments');
+
+let userLat;
+let userLong;
 
 function closeModule() {
   formDisplay.classList.add('hidden');
@@ -26,26 +34,24 @@ function openModule() {
   overlayDisplay.classList.remove('hidden');
 }
 
-
 form.addEventListener('submit', addEntry.bind(this));
 form.addEventListener('reset', closeModule);
-
-
 
 
 let fishingSpots = new Array();
 let map;
 
 class FishSpot {
-    id = Date.now()
-    date = Date()
+    id = Date.now();
+    date = new Date();
 
-    constructor (rating, numFish, lat, lng, weatherInfo) {
+    constructor (rating, numFish, lat, lng, comment, {fahrenheit}) {
         this.rating = rating;
         this.numFish = numFish;
         this.lat = lat;
         this.lng = lng;
-        this.weather = weatherInfo;
+        this.comment = comment;
+        this.fahrenheit = fahrenheit.toFixed(0);
     } 
 }
 
@@ -111,11 +117,11 @@ function renderSpinner() {
 
 function loadMap (Pos) {
     if (Pos) {
-        map = L.map('mapid').setView([Pos.coords.latitude, Pos.coords.longitude], 13);
+       userLat = Pos.coords.latitude;
+       userLong = Pos.coords.longitude;
     }
-    else {
-        map = L.map('mapid').setView([DEFAULT_MAP_LAT, DEFAULT_MAP_LONG], 13);
-    }
+
+    map = L.map('mapid').setView([userLat || DEFAULT_MAP_LAT, userLong || DEFAULT_MAP_LONG], 13);
     
     /*L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
         attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
@@ -135,21 +141,50 @@ function saveLatLong(pos) {
   openModule();
 }
 
+function addSideMark(mark) {
+  
+  const html = 
+  `<li class="side__entries">
+    <h3>${mark.date.toLocaleDateString("en-US", DATE_OPTIONS)}</h2>
+    <div>
+      <span>${mark.rating}</span>
+    </div>
+    <div class="mid__row">` + (mark.numFish && `
+      <span class="side__emoji">
+        <span class='icon_row'>🐟</span>
+        <span class='val_row text_row'>${mark.numFish}</span>
+      </span>`) +
+      `<span class="side__emoji">
+        <span class="icon_row">☀️</span>
+        <span class="val_row">${mark.fahrenheit}</span>
+        <span class="text_row">°F</span>            
+      </span>
+      <span class="side__emoji">
+        <span class="icon_row">📍</span> 
+        <span class="val_row text_row">${distance(mark.lat, mark.lng, userLat, userLong)}</span>
+      </span>
+    </div>
+    <div>
+      <span>${mark.comment}</span>
+    </div>
+  </li>`
+
+  markList.insertAdjacentHTML('beforeend', html);
+}
+
 function addEntry(e) {
+    
     e.preventDefault();
-    let title = "Fishing Entry";
 
     weather(formLat.value,formLong.value ).then(weatherInfo => {
-        const tempSpot = new FishSpot(formRating.value, formFish.value, formLat.value, formLong.value, weatherInfo);
-        
+        console.log(formRating);
+        const tempSpot = new FishSpot(formRating.value, formFish.value, formLat.value, formLong.value, formComment.value, weatherInfo);
+        addSideMark(tempSpot);
         fishingSpots.push(tempSpot);
-        addMarker(formLat.value, formLong.value, title);
+        addMarker(formLat.value, formLong.value, `${tempSpot.lat}° ${tempSpot.lng}°`);
         form.reset();
-    })
+    });
     closeModule();
-
-
-    console.log(fishingSpots);
 }
 function addMarker(lat, lng, title) {
 
@@ -168,4 +203,28 @@ function addMarker(lat, lng, title) {
         `${title}`
       )
       .openPopup();
+}
+
+function distance(lat1, lon1, lat2, lon2) {
+
+  const c = Math.cos;
+  const a = 0.5 - c((lat2 - lat1) * PI_DIV_180)/2 + 
+          c(lat1 * PI_DIV_180) * c(lat2 * PI_DIV_180) * 
+          (1 - c((lon2 - lon1) * PI_DIV_180))/2;
+  const distance = 2 * EARTH_R * Math.asin(Math.sqrt(a));
+
+  if (distance < 1) {
+    return "less than a mile away"
+  }
+  if (distance > 100) {
+    return "over 100 miles away"
+  }
+  if (Math.round(distance) === 1) {
+    return "1 mile away"
+  }
+  return `${Math.round(distance)} miles away`;
+}
+
+function setLocalStorage() {
+  localStorage.setItem('marks', JSON.stringify(fishingSpots));
 }

@@ -190,7 +190,7 @@ h2 {
 }*/
 
 .side__emoji {
-  margin-left: 0.5rem;
+  margin-right: 0.6rem;
 }
 
 .list__marks {
@@ -225,6 +225,7 @@ h2 {
 }
 
 .form__add__button:focus {
+  border-color: lightblue;
   background-color: lightblue;
 }
 
@@ -243,9 +244,16 @@ h2 {
 }
 
 .form__cancel__button:focus {
+  border-color: rgb(255, 118, 118);
   background-color: rgb(255, 118, 118);
 }
 /*
 .form__add__button:hover {
   border-color: lightcoral;
 }*/
+
+.popupCustom .leaflet-popup-tip,
+.popupCustom .leaflet-popup-content-wrapper {
+  background: var(--color-dark--1);
+  color: white;
+}

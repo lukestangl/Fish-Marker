@@ -24,34 +24,9 @@
     <div class="sidebar">
       <img class="logo" src="FishMarkLogo.png"/>
       <ul class="list__marks">
-        <li class="side__entries">
-          <h3>April 14</h2>
-          <div>
-            <span>⭐️⭐️⭐️⭐️⭐️</span
-          </div>
-          <div class="mid__row">
-            <span>
-              <span class="icon_row">🐟</span>
-              <span class="val_row text_row">3</span>
-            </span>
-            <span class="side__emoji">
-              <span class="icon_row">☀️</span>
-              <span class="val_row">78</span>
-              <span class="text_row">°F</span>            
-            </span>
-            <span class="side__emoji">
-              <span class="icon_row">📍</span> 
-              <span class="val_row">2</span> 
-              <span class="text_row">miles away</span>
-            </span>
-          </div>
-          <div>
-            <span>This place was nice!</span>
-          </div>
-        </li>
-      </div>
-    </ul>
-
+        
+      </ul>
+    </div>
     <div id="mapid"></div>
 
     <div class="modal hidden">
@@ -61,7 +36,7 @@
         </div>
         <div class="form__input">
             <label class="form__label">Rating</label>
-            <select>
+            <select class="form__rating">
               <option value="⭐️">1</option>
               <option value="⭐️⭐️">2</option>
               <option value="⭐️⭐️⭐️">3</option>
@@ -69,11 +44,11 @@
               <option value="⭐️⭐️⭐️⭐️⭐️">5</option>
             </select>
             <label class="form__label">Fish Count</label>
-            <input class="form__fish" maxlength="3" placeholder="0"/>
+            <input class="form__fish" maxlength="2" placeholder="0"/>
             <label class="form__label">Lat</label>
-            <input class="form__lat" maxlength="5"/>
+            <input class="form__lat" maxlength="8"/>
             <label class="form__label">Long</label>
-            <input class="form__long" maxlength="5"/>
+            <input class="form__long" maxlength="8"/>
             <label class="form__label">Comments</label>
           </div>
           <div>
